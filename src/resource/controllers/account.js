@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { findOneAndUpdate } = require('../models/account');
+const account = require('../models/account');
 const accountModel = require('../models/account');
 const httpStatus = require('../utils/httpStatus');
 const accountController = {};
@@ -48,6 +50,87 @@ accountController.signup = async(req, res, next) =>{
     }
 }
 accountController.login = async(req, res, next) => {
+    try{
+        const {
+            account,
+            password
+        } = req.body
+        const user = await accountModel.findOne({
+            email: account
+        })
 
+        if(!user){
+            return res.status(httpStatus.BAD_REQUEST).json({
+                message: 'Username or password incorect'
+            });
+        }
+
+        // password
+        if(user.password !== password){
+            return res.status(httpStatus.BAD_REQUEST).json({
+                message: 'Username or password incorrect'
+            });
+        }
+
+        //sucess
+        return res.status(httpStatus.OK).json({
+                id: user.id,
+                email: user.email,
+                phone: user.phoneNumber
+        })
+
+
+    }catch (e){
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: 'error'
+        })
+    }
+}
+
+accountController.changePassword = async(req, res, next) => {
+    try{
+        let userId = req.params.userId;
+        console.log(req.userId)
+        let user  = await accountModel.findById(userId);
+        if(user == null){
+            return res.status(httpStatus.UNAUTHORIZED).json({
+                message: "UNAUTHORIZED",
+                userId: userId
+            })
+        }
+        const {
+            currentPassword,
+            newPassword
+        } = req.body;
+
+        if(currentPassword !== user.password){
+            return res.status(httpStatus.BAD_REQUEST).json({
+                message: 'Currnent password incorect',
+                code: 'CURRENT_PASSWORD_INCORRECT'
+            });
+        }
+
+        user = await accountModel.findOneAndUpdate({_id:userId}, {
+            password: newPassword
+        }, {
+            new: true,
+            runValidators: true
+        });
+        if(!user){
+            return res.status(httpStatus.NOT_FOUND).json({
+                message: "Can not find user"
+            })
+        }
+
+        user = await accountModel.findById(userId).select('email fullname phoneNumber');
+        return res.status(httpStatus.OK).json({
+            data: user
+        })
+    }catch (e){
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: e.message,
+        });
+
+    }
 }
 module.exports = accountController;

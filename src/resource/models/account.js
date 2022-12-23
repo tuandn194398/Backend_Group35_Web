@@ -30,4 +30,4 @@ const account = new mongoose.Schema({
 });
 account.index({email: 1}) // index
 
-module.exports = mongoose.model('account', account)
+module.exports = mongoose.model('accounts', account)
