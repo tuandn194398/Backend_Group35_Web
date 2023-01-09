@@ -15,15 +15,16 @@ const account = new mongoose.Schema({
     },
     address: {
         type: String,
+        require: true,
         default: ''
     },
     phoneNumber: {
         type: String,
-        require: true,
-        default: ''
+        require: false,
     },
     dayOfBirth: {
-        type: Date,
+        type: String,
+        require: false,
         default: '',
     }
 

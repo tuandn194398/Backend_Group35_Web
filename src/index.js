@@ -3,12 +3,10 @@ const engine = require('express-handlebars');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 require("dotenv/config");
-const accountRoutes = require("./resource/routes/account");
+const apiRoutes = require("./resource/routes/api/index");
 
 const app = express();
 const port = 3000;
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() =>{
@@ -18,7 +16,9 @@ mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedT
         console.log('Error connection to DB');
     })
 
-app.use("/api", accountRoutes);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));    
+app.use("/api", apiRoutes);
 app.get('/', (req, res) => {
     // res.render('home');
     res.status(200).json({

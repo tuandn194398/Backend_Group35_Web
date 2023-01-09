@@ -1,6 +1,3 @@
-const mongoose = require('mongoose');
-const { findOneAndUpdate } = require('../models/account');
-const account = require('../models/account');
 const accountModel = require('../models/account');
 const httpStatus = require('../utils/httpStatus');
 const accountController = {};
@@ -11,6 +8,9 @@ accountController.signup = async(req, res, next) =>{
             email,
             password,
             fullName,
+            address,
+            phoneNumber,
+            dayOfBirth,
         } = req.body;
         let user = await accountModel.findOne({
             email: email,
@@ -21,19 +21,27 @@ accountController.signup = async(req, res, next) =>{
             });
         }
 
-        account = new accountModel({
+        const account = new accountModel({
             email: email,
             password: password,
             fullName: fullName,
+            address: address,
+            phoneNumber: phoneNumber,
+            dayOfBirth: dayOfBirth,
 
         });
         try{
+            console.log("creating")
             const savedAccount = await account.save();
+            console.log("created")
             res.status(httpStatus.CREATED).json({
                 data: {
                     id: savedAccount._id,
                     email: savedAccount.email,
                     fullName: savedAccount.fullName,
+                    address: savedAccount.address,
+                    phoneNumber: savedAccount.phoneNumber,
+                    dayOfBirth: dayOfBirth.dayOfBirth
                 }
             })
         }catch{
@@ -42,7 +50,7 @@ accountController.signup = async(req, res, next) =>{
             });
 
         }
-    }catch{
+    }catch(error){
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             message: "LOST SERVER"
         });
