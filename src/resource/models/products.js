@@ -28,6 +28,10 @@ const product = new mongoose.Schema({
         require: false,
         default: ''
     },
+    address:{
+        type:String,
+        require: true,
+    },
     createAt: {
         type: String,
         require: false,

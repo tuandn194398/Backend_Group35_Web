@@ -141,4 +141,51 @@ accountController.changePassword = async(req, res, next) => {
 
     }
 }
+accountController.getUserById = async(req, res, next) => {
+    try{
+        let userId = req.params.userId;
+        let user = await accountModel.findById(userId)
+        if(user == null){
+            return res.status(httpStatus.NOT_FOUND).json({message: "Can not find"});
+        }
+        return res.status(httpStatus.OK).json({
+            data: user,
+        });
+    }catch(error){
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({message: error.message});
+    }
+
+}
+accountController.editInfo = async(req, res, next) =>{
+    try{
+        let userId = req.params.userId;
+        let userFind = await accountModel.findById(userId);
+        if(userFind == null){
+            return res.status(httpStatus.NOT_FOUND).json({
+                message:"CAN'T FIND"
+            }); 
+        }
+        const{
+            email,
+            fullName,
+            address,
+            phoneNumber,
+            dayOfBirth
+        } = req.body
+        let userSaved = await accountModel.findByIdAndUpdate(userId,{
+            email: email,
+            fullName: fullName,
+            address: address,
+            phoneNumber: phoneNumber,
+            dayOfBirth: dayOfBirth,
+        },{new: true});
+        return res.status(httpStatus.OK).json({
+            data: userSaved,
+        })
+    }catch(error){
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: error.message
+        });
+    }
+}
 module.exports = accountController;
