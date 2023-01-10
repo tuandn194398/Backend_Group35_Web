@@ -7,14 +7,18 @@ const apiRoutes = require("./resource/routes/api/index");
 
 const app = express();
 const port = 3000;
+const db = require('./config/db')
 
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+// Connect DB
+db.connect();
+
+/* mongoose.connect("mongodb+srv://webgroup35:zQeDy05bQ28mgQV7@cluster0.hesfnsg.mongodb.net/test", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() =>{
         console.log('DB connection');
     })
     .catch((error) =>{
         console.log('Error connection to DB');
-    })
+    }) */
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));    
