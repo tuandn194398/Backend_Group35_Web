@@ -1,4 +1,5 @@
 const productModel = require("../models/products");
+const { use } = require("../routes/account");
 const httpStatus = require("../utils/httpStatus");
 
 const productControler = {};
@@ -113,14 +114,14 @@ productControler.getProductDetail = async(req, res, next) => {
     }
 }
 productControler.search  = async(req, res, next) =>{
-    let key = req.params.key
+    let key = req.query.search;
     let product = await productModel.find({
         "$or":[
             {
-                name:{ $regex: key},
+                name:{ $regex: key, $options:'i'},
             },
             {
-                categoryId: { $regex: key},
+                categoryId: { $regex: key, $options:'i'},
             },
         ]
     });
@@ -130,5 +131,6 @@ productControler.search  = async(req, res, next) =>{
     return res.status(httpStatus.OK).json({
         data: product,
     })
+
 }
 module.exports = productControler;
