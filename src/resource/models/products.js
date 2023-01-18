@@ -7,8 +7,10 @@ const product = new mongoose.Schema({
         require: true
     },
     categoryId: {
-        type: String,
-        require: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'categories',
+        // type: String,
+        // require: true,
     },
     shopId: {
         type: String,

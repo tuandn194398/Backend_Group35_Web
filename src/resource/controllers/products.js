@@ -1,4 +1,5 @@
 const productModel = require("../models/products");
+const categoryModel = require('../models/category')
 const { use } = require("../routes/account");
 const httpStatus = require("../utils/httpStatus");
 
@@ -8,16 +9,24 @@ productControler.createProduct = async(req, res, next) =>{
     try{
         const{
             name,
-            categoryId,
+            categoryName,
             shopId,
             price,
             quantity,
             address,
             description,
         } = req.body;
+        let category =  await categoryModel.findOne(
+            {name: categoryName}
+        )
+        if (category == null){
+            return res.status(httpStatus.BAD_GATEWAY).json({
+                message: "CAN'T FIND CATEGORY",
+            });
+        }
         const product = new productModel({
             name: name,
-            categoryId: categoryId,
+            categoryId: category._id,
             shopId: shopId,
             price: price,
             quantity: quantity,
@@ -40,14 +49,14 @@ productControler.createProduct = async(req, res, next) =>{
                     createAt: saveProduct.createAt,
                 }
             })
-        }catch{
+        }catch(e){
             return res.status(httpStatus.BAD_REQUEST).json({
-                message: "BAD_REQUEST",
+                message:"BAD REQUEST " + e.message,
             });
         }
-    }catch{
+    }catch(e){
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-            message: "LOST SERVER"
+            message:"LOST SERVER " + e.message
         });
 
     }
@@ -139,7 +148,7 @@ productControler.search  = async(req, res, next) =>{
 
 }
 productControler.getAllProduct = async(req, res, next) =>{
-    let limit = req.query.search;
+    let limit = req.query.limit;
     try{
         const products = await productModel.find().limit(limit)
         return res.status(httpStatus.OK).json({
@@ -152,7 +161,7 @@ productControler.getAllProduct = async(req, res, next) =>{
         });
     }
 }
-productControler.getProductByCategory = async(req, res, next) =>{
+productControler.getProductByCategoryId = async(req, res, next) =>{
  //24sp/page
 }
 module.exports = productControler;
