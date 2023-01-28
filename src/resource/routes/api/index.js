@@ -1,6 +1,7 @@
 const express = require("express");
 
-const accountRoutes = require("../account")
+const accountRoutes = require("../account");
+const categoryRoutes = require("../category");
 const productRoutes = require("../products")
 const cartRoutes = require("../cart");
 const orderRoutes = require("../order");
@@ -17,5 +18,7 @@ apiRoutes.use("/accounts", accountRoutes)
 apiRoutes.use("/products", productRoutes)
 apiRoutes.use("/cart", cartRoutes)
 apiRoutes.use("/order", orderRoutes)
+
+apiRoutes.use("/category", categoryRoutes);
 
 module.exports = apiRoutes;

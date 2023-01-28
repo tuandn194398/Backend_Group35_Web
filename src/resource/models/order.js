@@ -22,16 +22,13 @@ const order = new mongoose.Schema({
         require: true
     },
     paymentMethod: {
-        type: String,
-        require: true
+        type: String
     },
     deliveryUnit: {
-        type: String,
-        require: true
+        type: String
     },
     status: {
-        type: String,
-        require: true
+        type: String
     },
     createAt: {
         type: Date,

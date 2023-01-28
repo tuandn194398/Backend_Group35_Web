@@ -3,10 +3,11 @@ const express = require('express');
 
 const orderRoutes = express.Router();
 
-orderRoutes.post('/create', orderController.addToCart);
-orderRoutes.put('/update', orderController.modifyProductInfo);
-orderRoutes.delete('/delete', orderController.deleteProduct);
-orderRoutes.get('/getCart', orderController.getCartDetail);
-orderRoutes.use('/:slug', orderController.show);
+orderRoutes.post('/create', orderController.createOrder);
+orderRoutes.put('/update/:_id', orderController.updateOrder);
+orderRoutes.delete('/delete/:_id', orderController.deleteProduct);
+orderRoutes.get('/getOrderList/:userId', orderController.getOrderList);
+orderRoutes.get('/getOrderDetail/:_id', orderController.getOrderDetail);
+/* orderRoutes.use('/:slug', orderController.show); */
 
 module.exports =  orderRoutes;
