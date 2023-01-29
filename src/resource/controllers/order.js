@@ -115,7 +115,6 @@ orderControler.getOrderDetail = async (req, res, next) => {
 orderControler.deleteProduct = async (req, res, next) => {
     try {
         const { _id } = req.params;
-        console.log(_id)
         let order = await orderModel.findByIdAndDelete(_id).exec();
         if(order == null){
             return res.status(httpStatus.NOT_FOUND).json({message: "Can not find order"});
