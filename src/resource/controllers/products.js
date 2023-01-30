@@ -15,6 +15,7 @@ productControler.createProduct = async(req, res, next) =>{
             quantity,
             address,
             description,
+            image,
         } = req.body;
         let category =  await categoryModel.findOne(
             {name: categoryName}
@@ -32,6 +33,7 @@ productControler.createProduct = async(req, res, next) =>{
             quantity: quantity,
             address: address,
             description: description,
+            image: image,
             createAt: Date(Date.now()).toString(),
         });
         try{
@@ -46,6 +48,7 @@ productControler.createProduct = async(req, res, next) =>{
                     quantity: saveProduct.quantity,
                     address: saveProduct.address,
                     description: saveProduct.description,
+                    image: saveProduct.image,
                     createAt: saveProduct.createAt,
                 }
             })
@@ -96,6 +99,7 @@ productControler.editProduct = async(req, res, next) => {
             quantity,
             address,
             description,
+            image,
         } = req.body
         let productSaved = await productModel.findByIdAndUpdate(productId,{
             name: name,
@@ -103,6 +107,7 @@ productControler.editProduct = async(req, res, next) => {
             quantity: quantity,
             address: address,
             description: description,
+            image: image,
         },{new: true});
         return res.status(httpStatus.OK).json({
             data: productSaved
