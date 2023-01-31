@@ -14,7 +14,7 @@ const order = new mongoose.Schema({
         require: true
     },
     productList: {
-        type: Array,
+        type: Array, // mang luu id cua cac orderProduct
         require: true
     },
     totalPrice: {
