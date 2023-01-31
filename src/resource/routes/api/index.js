@@ -7,6 +7,7 @@ const cartRoutes = require("../cart");
 const orderRoutes = require("../order");
 const commentRoutes = require("../comment");
 const statisticRoutes = require("../statistic");
+const notifyRoutes = require("../notify");
 
 const apiRoutes = express.Router();
 
@@ -23,5 +24,6 @@ apiRoutes.use("/order", orderRoutes)
 apiRoutes.use("/comment", commentRoutes)
 apiRoutes.use("/category", categoryRoutes);
 apiRoutes.use("/statistic", statisticRoutes);
+apiRoutes.use("/notify", notifyRoutes);
 
 module.exports = apiRoutes;
