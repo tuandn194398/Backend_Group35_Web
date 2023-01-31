@@ -69,4 +69,14 @@ categoryController.getCategory = async(req, res, next) =>{
         });
     }
 }
+categoryController.getListCategory = async(req, res, next) => {
+    try{
+        let listCategory = await categoryModel.find()
+        return res.status(httpStatus.OK).json({
+            data: listCategory,
+        });
+    }catch(error){
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({message: error.message});
+    }   
+}
 module.exports = categoryController;
