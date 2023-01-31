@@ -66,7 +66,7 @@ productControler.createProduct = async(req, res, next) =>{
 }
 productControler.deleteProduct = async(req, res, next) => {
     try{
-        let id = req.params.id;
+        let id = req.body.id;
         let product = await productModel.findByIdAndDelete({_id:id})
         .exec();
         if(product == null){
@@ -82,7 +82,7 @@ productControler.deleteProduct = async(req, res, next) => {
 productControler.editProduct = async(req, res, next) => {
     try{
         let userId = req.body.userId;
-        let productId = req.params.productId;
+        let productId = req.body.productId;
         let productFind = await productModel.findById(productId);
         let shopId = productFind.shopId
         if(productFind == null){
@@ -120,7 +120,7 @@ productControler.editProduct = async(req, res, next) => {
 }
 productControler.getProductDetail = async(req, res, next) => {
     try{
-        let productId = req.params.productId;
+        let productId = req.body.productId;
         let product = await productModel.findById(productId)
         if(product == null){
             return res.status(httpStatus.NOT_FOUND).json({message: "Can not find product"});
@@ -133,17 +133,13 @@ productControler.getProductDetail = async(req, res, next) => {
     }
 }
 productControler.search  = async(req, res, next) =>{
-    let key = req.query.search;
+    let key = req.body.search;
+    let limit = req.body.limit;
     let product = await productModel.find({
-        "$or":[
-            {
+            
                 name:{ $regex: key, $options:'i'},
-            },
-            {
-                categoryId: { $regex: key, $options:'i'},
-            },
-        ]
-    });
+            
+    }).limit(limit);
     if(product == null){
         return res.status(httpStatus.NOT_FOUND).json({message: "Can not find product"});
     }
@@ -153,16 +149,16 @@ productControler.search  = async(req, res, next) =>{
 
 }
 productControler.getAllProduct = async(req, res, next) =>{
-    let limit = req.query.limit;
+    let limit = req.body.limit;
     try{
-        const products = await productModel.find().limit(limit)
+        const products = await productModel.find().limit(limit).sort('createAt')
         return res.status(httpStatus.OK).json({
             data: products,
         });
 
     }catch(error){
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-            message: "LOST SERVER"
+            message: "LOST SERVER" 
         });
     }
 }

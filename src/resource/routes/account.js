@@ -5,7 +5,7 @@ const accountRoutes = express.Router();
 
 accountRoutes.post("/signup", accountController.signup);
 accountRoutes.post("/login", accountController.login);
-accountRoutes.post("/change-password/:userId", accountController.changePassword);
-accountRoutes.get("/get-user/:userId", accountController.getUserById);
-accountRoutes.post("/edit-user/:userId",accountController.editInfo)
+accountRoutes.post("/change-password", accountController.changePassword);
+accountRoutes.post("/get-user", accountController.getUserById);
+accountRoutes.post("/edit-user",accountController.editInfo)
 module.exports =  accountRoutes;

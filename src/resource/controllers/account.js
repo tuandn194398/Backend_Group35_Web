@@ -97,7 +97,7 @@ accountController.login = async(req, res, next) => {
 
 accountController.changePassword = async(req, res, next) => {
     try{
-        let userId = req.params.userId;
+        let userId = req.body.userId;
         console.log(req.userId)
         let user  = await accountModel.findById(userId);
         if(user == null){
@@ -143,7 +143,7 @@ accountController.changePassword = async(req, res, next) => {
 }
 accountController.getUserById = async(req, res, next) => {
     try{
-        let userId = req.params.userId;
+        let userId = req.body.userId;
         let user = await accountModel.findById(userId)
         if(user == null){
             return res.status(httpStatus.NOT_FOUND).json({message: "Can not find"});
@@ -158,7 +158,7 @@ accountController.getUserById = async(req, res, next) => {
 }
 accountController.editInfo = async(req, res, next) =>{
     try{
-        let userId = req.params.userId;
+        let userId = req.body.userId;
         let userFind = await accountModel.findById(userId);
         if(userFind == null){
             return res.status(httpStatus.NOT_FOUND).json({

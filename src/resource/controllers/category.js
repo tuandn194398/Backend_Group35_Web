@@ -38,12 +38,14 @@ categoryController.createCategory = async(req, res, next) =>{
     }
 }
 categoryController.getCategory = async(req, res, next) =>{
-    let limit = req.query.limit;
+    let limit = req.body.limit;
+    console.log(limit)
     try{
-        const categoryName = req.params.categoryName;
-        const category = await categoryModel.findOne({name:categoryName, $option: 'i'});
-        console.log(typeof(categoryName))
-        console.log(category._id)
+        const categoryName = req.body.categoryName;
+        const category = await categoryModel.findOne({
+            name:{ $regex: categoryName, $options:'i'}
+        });
+        console.log((category._id))
         if(category == null){
             return res.status(httpStatus.BAD_GATEWAY).json({
                 message: "CAN'T FIND CATEGORY",
