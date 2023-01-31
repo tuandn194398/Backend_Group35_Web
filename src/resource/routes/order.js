@@ -5,9 +5,11 @@ const orderRoutes = express.Router();
 
 orderRoutes.post('/create', orderController.createOrder);
 orderRoutes.put('/update/:_id', orderController.updateOrder);
-orderRoutes.delete('/delete/:_id', orderController.deleteProduct);
+orderRoutes.put('/addProduct/:_id/:productId', orderController.addProductToOrder);
+orderRoutes.delete('/delete/:_id', orderController.deleteOrder);
 orderRoutes.get('/getOrderList/:userId', orderController.getOrderList);
 orderRoutes.get('/getOrderDetail/:_id', orderController.getOrderDetail);
+orderRoutes.get('/getProductDetail/:_id', orderController.getProductDetail);
 /* orderRoutes.use('/:slug', orderController.show); */
 
 module.exports =  orderRoutes;

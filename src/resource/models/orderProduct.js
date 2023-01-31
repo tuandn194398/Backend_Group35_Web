@@ -5,12 +5,17 @@ const orderProduct = new mongoose.Schema({
         type: String,
         require: true
     },
+    orderId: {
+        type: String,
+        require: true
+    },
     totalPrice: {
         type: Number,
         require: true
     },
     quantity: {
         type: Number,
+        min: 0,
         require: true
     },
 });
