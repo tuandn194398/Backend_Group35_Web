@@ -221,8 +221,40 @@ orderControler.deleteOrder = async (req, res, next) => {
     }
 }
 
-orderControler.searchOrder = async (req, res, next) => {
+orderControler.getBuyOrderList = async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        let order = await orderModel.find({ buyerId: userId }).exec();
+        if (order == null) {
+            return res.status(httpStatus.NOT_FOUND).json({ message: "Order is null" });
+        }
 
+        res.status(200).json({
+            message: order
+        });
+    } catch {
+        return res.status(httpStatus.BAD_REQUEST).json({
+            message: "BAD_REQUEST"
+        });
+    }
+}
+
+orderControler.getSellOrderList = async (req, res, next) => {
+    try {
+        const { shopId } = req.params;
+        let order = await orderModel.find({ shopId: shopId }).exec();
+        if (order == null) {
+            return res.status(httpStatus.NOT_FOUND).json({ message: "Order is null" });
+        }
+
+        res.status(200).json({
+            message: order
+        });
+    } catch {
+        return res.status(httpStatus.BAD_REQUEST).json({
+            message: "BAD_REQUEST"
+        });
+    }
 }
 
 module.exports = orderControler;

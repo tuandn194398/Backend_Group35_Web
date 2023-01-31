@@ -10,6 +10,8 @@ orderRoutes.delete('/delete/:_id', orderController.deleteOrder);
 orderRoutes.get('/getOrderList/:userId', orderController.getOrderList);
 orderRoutes.get('/getOrderDetail/:_id', orderController.getOrderDetail);
 orderRoutes.get('/getProductDetail/:_id', orderController.getProductDetail);
+orderRoutes.get('/getBuyOrderList/:userId', orderController.getBuyOrderList);
+orderRoutes.get('/getSellOrderList/:shopId', orderController.getSellOrderList);
 /* orderRoutes.use('/:slug', orderController.show); */
 
 module.exports =  orderRoutes;
