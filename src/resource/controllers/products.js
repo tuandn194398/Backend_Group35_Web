@@ -126,7 +126,7 @@ productControler.getProductDetail = async(req, res, next) => {
             return res.status(httpStatus.NOT_FOUND).json({message: "Can not find product"});
         }
         return res.status(httpStatus.OK).json({
-            data: product,
+            data: product.image[0],
         });
     }catch{
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({message: error.message});
