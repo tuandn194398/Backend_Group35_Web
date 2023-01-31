@@ -82,9 +82,7 @@ accountController.login = async(req, res, next) => {
 
         //sucess
         return res.status(httpStatus.OK).json({
-                id: user.id,
-                email: user.email,
-                phone: user.phoneNumber
+                data: user
         })
 
 
