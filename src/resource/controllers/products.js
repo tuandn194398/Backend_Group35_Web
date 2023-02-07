@@ -162,7 +162,21 @@ productControler.getAllProduct = async(req, res, next) =>{
         });
     }
 }
-productControler.getProductByCategoryId = async(req, res, next) =>{
- //24sp/page
+productControler.getProductByShop = async(req, res, next) =>{
+    const shopId =  req.body.shopId;
+    const limit = req.body.limit;
+    try{
+        const products = await productModel.find({
+            shopId: shopId
+        }).limit(limit).sort('createAt');
+        return res.status(httpStatus.OK).json({
+            data: products,
+        });
+    }catch(error){
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: "LOST SERVER" 
+        });
+
+    }
 }
 module.exports = productControler;

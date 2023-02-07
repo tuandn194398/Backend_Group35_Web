@@ -9,4 +9,5 @@ productRoutes.post("/edit-product",productControler.editProduct);
 productRoutes.post("/get-product-detail",productControler.getProductDetail);
 productRoutes.post("/search", productControler.search);
 productRoutes.post("/get-all-product",productControler.getAllProduct);
+productRoutes.post("/get-products-by-shop",productControler.getProductByShop)
 module.exports =  productRoutes;
